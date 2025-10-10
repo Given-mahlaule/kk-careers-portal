@@ -37,7 +37,7 @@ export default function ProgressStepper({ steps, currentStep, onStepClick }) {
                   onClick={() => isClickable && onStepClick && onStepClick(stepNumber)}
                   disabled={!isClickable}
                   className={`
-                    flex items-center justify-center w-10 h-10 rounded-full border-2 text-sm font-medium transition-all duration-300 transform bg-white
+                    flex items-center justify-center w-10 h-10 rounded-full border-2 text-sm font-medium transition-all duration-300 transform
                     ${isCompleted 
                       ? 'border-green-600 bg-green-600 text-white shadow-md scale-105' 
                       : isCurrent 
