@@ -112,15 +112,15 @@ export default function DocumentUpload({ data, onUpdate, errors }) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Document Upload</h2>
-        <p className="text-gray-600">
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">Document Upload</h2>
+        <p className="text-sm text-gray-600">
           Please upload your CV and cover letter. These documents will help us better understand your qualifications and experience.
         </p>
       </div>
 
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <FileUploadArea 
           type="cv" 
           label="Curriculum Vitae (CV)" 
@@ -133,7 +133,7 @@ export default function DocumentUpload({ data, onUpdate, errors }) {
         />
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
         <h3 className="text-sm font-medium text-blue-900 mb-2">Tips for your documents:</h3>
         <ul className="text-sm text-blue-800 space-y-1">
           <li>• Ensure your CV is up-to-date and includes all relevant experience</li>

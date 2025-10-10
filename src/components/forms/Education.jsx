@@ -81,15 +81,15 @@ export default function Education({ data, onUpdate, errors }) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Education</h2>
-        <p className="text-gray-600">List your educational background, starting with your highest qualification.</p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">Education</h2>
+        <p className="text-sm text-gray-600">List your educational background, starting with your highest qualification.</p>
       </div>
 
       {educations.map((education, index) => (
-        <div key={index} className="border border-gray-200 rounded-lg p-6 bg-white">
-          <div className="flex justify-between items-center mb-4">
+        <div key={index} className="border border-gray-200 rounded-lg p-4 bg-white">
+          <div className="flex justify-between items-center mb-3">
             <h3 className="text-lg font-semibold text-gray-900">Education {index + 1}</h3>
             {educations.length > 1 && (
               <Button
@@ -103,7 +103,7 @@ export default function Education({ data, onUpdate, errors }) {
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Select
               label="Type of Education"
               name={`educationType-${index}`}

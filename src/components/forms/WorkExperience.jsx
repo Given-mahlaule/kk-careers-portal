@@ -59,15 +59,15 @@ export default function WorkExperience({ data, onUpdate, errors }) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Work Experience</h2>
-        <p className="text-gray-600">List your work experience, starting with your most recent position.</p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">Work Experience</h2>
+        <p className="text-sm text-gray-600">List your work experience, starting with your most recent position.</p>
       </div>
 
       {experiences.map((experience, index) => (
-        <div key={index} className="border border-gray-200 rounded-lg p-6 bg-white">
-          <div className="flex justify-between items-center mb-4">
+        <div key={index} className="border border-gray-200 rounded-lg p-4 bg-white">
+          <div className="flex justify-between items-center mb-3">
             <h3 className="text-lg font-semibold text-gray-900">
               Position {index + 1}
               {experience.current && (
@@ -88,7 +88,7 @@ export default function WorkExperience({ data, onUpdate, errors }) {
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Input
               label="Start Date"
               name={`startDate-${index}`}

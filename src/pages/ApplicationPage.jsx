@@ -167,11 +167,11 @@ export default function ApplicationPage() {
       <Container variant="default">
         <div className="w-full max-w-5xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-6">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <div className="text-center mb-4">
+            <h1 className="text-3xl font-bold text-gray-900 mb-1">
               Join Our Team
             </h1>
-            <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+            <p className="text-base text-gray-600 max-w-4xl mx-auto">
               Complete your profile to apply for opportunities with KK Labour Services. 
               We're looking for talented individuals to join our growing team.
             </p>
@@ -185,26 +185,26 @@ export default function ApplicationPage() {
           />
 
           {/* Form Content */}
-          <Card className="mb-6 shadow-lg">
-            <CardContent className="p-6">
+          <Card className="mb-4 shadow-lg">
+            <CardContent className="p-4">
               {renderStepContent()}
             </CardContent>
           </Card>
 
           {/* Navigation Buttons */}
-          <div className="flex justify-between items-center bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+          <div className="flex justify-between items-center bg-white rounded-lg border border-gray-200 p-2 shadow-sm">
             <Button
               variant="outline"
               onClick={handlePrevious}
               disabled={currentStep === 1}
               className="flex items-center"
-              size="lg"
+              size="sm"
             >
-              <ArrowLeft className="w-5 h-5 mr-2" />
+              <ArrowLeft className="w-3 h-3 mr-1" />
               Previous
             </Button>
 
-            <div className="text-base text-gray-600 font-medium">
+            <div className="text-xs text-gray-600 font-medium">
               Step {currentStep} of {steps.length}
             </div>
 
@@ -213,19 +213,19 @@ export default function ApplicationPage() {
                 onClick={handleSubmit}
                 disabled={isSubmitting}
                 className="flex items-center"
-                size="lg"
+                size="sm"
               >
                 {isSubmitting ? 'Submitting...' : 'Submit Application'}
-                {!isSubmitting && <CheckCircle className="w-5 h-5 ml-2" />}
+                {!isSubmitting && <CheckCircle className="w-3 h-3 ml-1" />}
               </Button>
             ) : (
               <Button
                 onClick={handleNext}
                 className="flex items-center"
-                size="lg"
+                size="sm"
               >
                 Next
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <ArrowRight className="w-3 h-3 ml-1" />
               </Button>
             )}
           </div>

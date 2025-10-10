@@ -15,13 +15,13 @@ export default function ProfileInformation({ data, onUpdate, errors }) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-1">Profile Information</h2>
-        <p className="text-base text-gray-600">Please provide your basic personal information.</p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">Profile Information</h2>
+        <p className="text-sm text-gray-600">Please provide your basic personal information.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <Input
           label="First Name"
           name="firstName"
