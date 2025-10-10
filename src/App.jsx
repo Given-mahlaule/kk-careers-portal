@@ -4,8 +4,11 @@ import ApplicationPage from './pages/ApplicationPage';
 import SuccessPage from './pages/SuccessPage';
 
 function App() {
+  // Get the base name for GitHub Pages deployment
+  const basename = import.meta.env.MODE === 'production' ? '/kk-careers-portal' : '';
+  
   return (
-    <Router>
+    <Router basename={basename}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/application" element={<ApplicationPage />} />
