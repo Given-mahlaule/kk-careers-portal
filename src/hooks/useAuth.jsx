@@ -36,6 +36,27 @@ export const AuthProvider = ({ children }) => {
     return () => subscription.unsubscribe()
   }, [])
 
+  const signUp = async (email, password, firstName, lastName) => {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName
+          }
+        }
+      })
+      
+      if (error) throw error
+      
+      return { success: true, user: data.user }
+    } catch (error) {
+      return { success: false, error: error.message }
+    }
+  }
+
   const signIn = async (email, password) => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -64,6 +85,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     loading,
+    signUp,
     signIn,
     signOut,
     isAuthenticated: !!user

@@ -4,28 +4,33 @@ import { useAuth } from '../../hooks/useAuth.jsx'
 import Button from '../../components/ui/Button'
 import Input from '../../components/ui/Input'
 import Card from '../../components/ui/Card'
-import { Lock, Mail, Eye, EyeOff } from 'lucide-react'
+import { Lock, Mail, Eye, EyeOff, Shield, Briefcase } from 'lucide-react'
 
 export default function AdminLogin() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { signIn, isAuthenticated, loading } = useAuth()
+  const { signIn, isAuthenticated, loading, signOut } = useAuth()
   
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState(location.state?.error || '')
   const [showPassword, setShowPassword] = useState(false)
 
-  // Redirect if already authenticated
+  // Check if user is already authenticated but not admin
   useEffect(() => {
     if (!loading && isAuthenticated) {
-      const from = location.state?.from?.pathname || '/admin/dashboard'
-      navigate(from, { replace: true })
+      // If there's an error in location state, user is not admin - sign them out
+      if (location.state?.error) {
+        signOut()
+      } else {
+        const from = location.state?.from?.pathname || '/admin/dashboard'
+        navigate(from, { replace: true })
+      }
     }
-  }, [isAuthenticated, loading, navigate, location])
+  }, [isAuthenticated, loading, navigate, location, signOut])
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -50,13 +55,23 @@ export default function AdminLogin() {
       const result = await signIn(formData.email, formData.password)
       
       if (result.success) {
-        // Redirect to intended page or dashboard
+        // Check if user has admin role
+        const isAdmin = result.user?.user_metadata?.role === 'admin'
+        
+        if (!isAdmin) {
+          setError('Access denied. Admin privileges required.')
+          setIsSubmitting(false)
+          return
+        }
+        
+        // Redirect to admin dashboard
         const from = location.state?.from?.pathname || '/admin/dashboard'
         navigate(from, { replace: true })
       } else {
         setError(result.error || 'Login failed. Please check your credentials.')
       }
-    } catch {
+    } catch (err) {
+      console.error('Login error:', err)
       setError('An unexpected error occurred. Please try again.')
     }
 
@@ -76,22 +91,48 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <Card className="shadow-xl border-0 bg-white">
-          <div className="p-8">
-            {/* Header */}
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Lock className="h-8 w-8 text-white" />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Professional Header - Full Width Edge to Edge */}
+      <header className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="w-full px-6 lg:px-12">
+          <div className="flex items-center justify-between py-4">
+            {/* Logo Section */}
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-md">
+                <Briefcase className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                Admin Portal
-              </h1>
-              <p className="text-gray-600">
-                Sign in to access the applications dashboard
-              </p>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">KK Labour Services</h1>
+                <p className="text-sm text-gray-500">Admin Portal</p>
+              </div>
             </div>
+
+            {/* Admin Badge */}
+            <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-lg border border-blue-200">
+              <Shield className="w-4 h-4 text-blue-600" />
+              <span className="text-sm font-medium text-blue-700">Administrator Access</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex-1 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md">
+          <Card className="shadow-xl border-0 bg-white">
+            <div className="p-8">
+              {/* Card Header */}
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Lock className="h-8 w-8 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Admin Portal
+                </h2>
+                <p className="text-gray-600">
+                  Sign in to access the applications dashboard
+                </p>
+              </div>
 
             {/* Error Message */}
             {error && (
@@ -182,6 +223,7 @@ export default function AdminLogin() {
             </div>
           </div>
         </Card>
+        </div>
       </div>
     </div>
   )

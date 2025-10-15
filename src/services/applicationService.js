@@ -52,9 +52,10 @@ export class ApplicationService {
   /**
    * Submit a complete job application
    * @param {Object} formData - The complete form data
+   * @param {string} userId - Optional user ID if user is logged in
    * @returns {Promise<{success: boolean, applicationId: string, error?: string}>}
    */
-  static async submitApplication(formData) {
+  static async submitApplication(formData, userId = null) {
     try {
       // Generate unique application ID
       const applicationId = crypto.randomUUID()
@@ -96,6 +97,7 @@ export class ApplicationService {
       // Prepare application data
       const applicationData = {
         id: applicationId,
+        user_id: userId, // Link to authenticated user if logged in
         first_name: formData.firstName,
         last_name: formData.lastName,
         email: formData.email,

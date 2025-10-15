@@ -1,121 +1,10 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
-import Input from '../components/ui/Input';
 import Card from '../components/ui/Card';
-import SupabaseTest from '../components/SupabaseTest';
-import { Users, Briefcase, ArrowRight, Mail, Lock } from 'lucide-react';
+import { Users, Briefcase, ArrowRight } from 'lucide-react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const [showLogin, setShowLogin] = useState(false);
-  const [loginData, setLoginData] = useState({
-    email: '',
-    password: ''
-  });
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (loginData.email && loginData.password) {
-      // Here you would typically validate credentials with your backend
-      console.log('Login attempt:', loginData);
-      // For now, just navigate to the application form
-      navigate('/application');
-    }
-  };
-
-  const handleInputChange = (field, value) => {
-    setLoginData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleCreateProfile = () => {
-    navigate('/application');
-  };
-
-  if (showLogin) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
-        <div className="w-full max-w-md">
-          <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm">
-            <div className="p-8">
-              <div className="text-center mb-8">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                  Welcome Back
-                </h1>
-                <p className="text-gray-600">
-                  Sign in to your existing profile
-                </p>
-              </div>
-
-              <form onSubmit={handleLogin} className="space-y-6">
-                <div className="relative">
-                  <Mail className="absolute left-3 top-8 text-gray-400 w-5 h-5 z-10" />
-                  <Input
-                    label="Email Address"
-                    type="email"
-                    name="email"
-                    value={loginData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    placeholder="your.email@example.com"
-                    className="pl-10"
-                    required
-                  />
-                </div>
-
-                <div className="relative">
-                  <Lock className="absolute left-3 top-8 text-gray-400 w-5 h-5 z-10" />
-                  <Input
-                    label="Password"
-                    type="password"
-                    name="password"
-                    value={loginData.password}
-                    onChange={(e) => handleInputChange('password', e.target.value)}
-                    placeholder="Enter your password"
-                    className="pl-10"
-                    required
-                  />
-                </div>
-
-                <div className="flex flex-col space-y-4 pt-2">
-                  <Button type="submit" className="w-full py-3 text-lg font-semibold">
-                    Sign In
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                  
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    className="w-full py-3"
-                    onClick={() => setShowLogin(false)}
-                  >
-                    Back to Options
-                  </Button>
-                </div>
-              </form>
-
-              <div className="mt-8 text-center pt-6 border-t border-gray-200">
-                <p className="text-sm text-gray-600">
-                  Don't have an account?{' '}
-                  <button
-                    onClick={handleCreateProfile}
-                    className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
-                  >
-                    Create a profile
-                  </button>
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
@@ -161,21 +50,21 @@ export default function LandingPage() {
 
               <div className="space-y-4">
                 <Button 
-                  onClick={() => setShowLogin(true)}
+                  onClick={() => navigate('/login')}
                   className="w-full py-4 text-lg font-semibold bg-blue-600 hover:bg-blue-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
                 >
                   <Users className="w-5 h-5 mr-3" />
-                  Yes, I have a profile
+                  Yes, I have a profile - Sign In
                   <ArrowRight className="w-5 h-5 ml-3" />
                 </Button>
                 
                 <Button 
                   variant="outline"
-                  onClick={handleCreateProfile}
+                  onClick={() => navigate('/signup')}
                   className="w-full py-4 text-lg font-semibold border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transform hover:scale-105 transition-all duration-200 shadow-lg"
                 >
                   <Briefcase className="w-5 h-5 mr-3" />
-                  No, create new profile
+                  No, create new profile - Sign Up
                   <ArrowRight className="w-5 h-5 ml-3" />
                 </Button>
               </div>

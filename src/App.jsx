@@ -6,6 +6,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './pages/LandingPage';
 import ApplicationPage from './pages/ApplicationPage';
 import SuccessPage from './pages/SuccessPage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import ProfilePage from './pages/ProfilePage';
 
 // Admin pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -22,32 +25,42 @@ function App() {
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/application" element={<ApplicationPage />} />
+          <Route path="/apply" element={<ApplicationPage />} />
           <Route path="/success" element={<SuccessPage />} />
+          
+          {/* User Authentication Routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          } />
           
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={
-            <ProtectedRoute>
+            <ProtectedRoute requireAdmin={true}>
               <AdminDashboard />
             </ProtectedRoute>
           } />
           <Route path="/admin/applications" element={
-            <ProtectedRoute>
+            <ProtectedRoute requireAdmin={true}>
               <AdminApplicationsPage />
             </ProtectedRoute>
           } />
           <Route path="/admin/applications/:id" element={
-            <ProtectedRoute>
+            <ProtectedRoute requireAdmin={true}>
               <AdminApplicationDetail />
             </ProtectedRoute>
           } />
           <Route path="/admin/stats" element={
-            <ProtectedRoute>
+            <ProtectedRoute requireAdmin={true}>
               <AdminStats />
             </ProtectedRoute>
           } />
           <Route path="/admin" element={
-            <ProtectedRoute>
+            <ProtectedRoute requireAdmin={true}>
               <AdminDashboard />
             </ProtectedRoute>
           } />

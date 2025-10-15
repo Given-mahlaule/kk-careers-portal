@@ -17,6 +17,7 @@ import DocumentUpload from '../components/forms/DocumentUpload';
 import { useFormData } from '../hooks/useFormData';
 import { validateStep, hasErrors } from '../utils/validation';
 import { ApplicationService } from '../services/applicationService';
+import { useAuth } from '../hooks/useAuth';
 
 import { CheckCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -30,6 +31,7 @@ const steps = [
 
 export default function ApplicationPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -97,8 +99,8 @@ export default function ApplicationPage() {
     try {
       console.log('Submitting application to Supabase:', formData);
       
-      // Submit to Supabase
-      const result = await ApplicationService.submitApplication(formData);
+      // Submit to Supabase (include user ID if logged in)
+      const result = await ApplicationService.submitApplication(formData, user?.id);
       
       if (result.success) {
         console.log('Application submitted successfully! ID:', result.applicationId);
@@ -182,6 +184,19 @@ export default function ApplicationPage() {
     <Layout>
       <Container variant="default">
         <div className="w-full max-w-5xl mx-auto">
+          {/* Back Navigation */}
+          {user && (
+            <div className="mb-4">
+              <button
+                onClick={() => navigate('/profile')}
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to Profile
+              </button>
+            </div>
+          )}
+
           {/* Header */}
           <div className="text-center mb-4">
             <h1 className="text-3xl font-bold text-gray-900 mb-1">
