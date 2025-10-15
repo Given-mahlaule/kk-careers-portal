@@ -15,12 +15,9 @@ import AdminApplicationDetail from './pages/admin/AdminApplicationDetail';
 import AdminStats from './pages/admin/AdminStats';
 
 function App() {
-  // Get the base name for GitHub Pages deployment
-  const basename = import.meta.env.MODE === 'production' ? '/kk-careers-portal' : '';
-  
   return (
     <AuthProvider>
-      <Router basename={basename}>
+      <Router>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
