@@ -16,6 +16,7 @@ import DocumentUpload from '../components/forms/DocumentUpload';
 // Hooks and utilities
 import { useFormData } from '../hooks/useFormData';
 import { validateStep, hasErrors } from '../utils/validation';
+import { ApplicationService } from '../services/applicationService';
 
 import { CheckCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -94,16 +95,31 @@ export default function ApplicationPage() {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('Submitting application to Supabase:', formData);
       
-      console.log('Submitting application:', formData);
+      // Submit to Supabase
+      const result = await ApplicationService.submitApplication(formData);
       
-      // Navigate to success page
-      navigate('/success');
+      if (result.success) {
+        console.log('Application submitted successfully! ID:', result.applicationId);
+        
+        // Clear form data
+        clearFormData();
+        
+        // Navigate to success page with application ID
+        navigate('/success', { 
+          state: { 
+            applicationId: result.applicationId,
+            applicantName: `${formData.firstName} ${formData.lastName}`
+          } 
+        });
+      } else {
+        throw new Error(result.error || 'Submission failed');
+      }
       
     } catch (error) {
       console.error('Submission error:', error);
+      alert(`Submission failed: ${error.message}`);
       setIsSubmitting(false);
     }
   };

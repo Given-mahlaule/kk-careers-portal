@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Card from '../components/ui/Card';
+import SupabaseTest from '../components/SupabaseTest';
 import { Users, Briefcase, ArrowRight, Mail, Lock } from 'lucide-react';
 
 export default function LandingPage() {
