@@ -1,11 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   plugins: [react()],
-  base: mode === 'production' ? '/kk-careers-portal/' : '/',
+  base: '/',
   build: {
     outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      }
+    }
   },
-}))
+  server: {
+    port: 3000,
+    host: true
+  }
+})
